@@ -69,6 +69,10 @@ int searchdir(char *name)
 		
 		searchdir(newname);
 		}
+		else
+		{
+			fprintf(stderr, "\nCouldn't find directory!\n");
+		}
 	}
 	d=readdir(d1);
  }

@@ -88,8 +88,11 @@ int searchdir(char *name)
        if (((st1.st_mtime)>=mind)&&((st1.st_mtime)<=maxd))
        {
 		   
-			fprintf(f1,"%s  %ld  %s\n",path,st1.st_size,ctime(&st1.st_mtime));
-			printf("%s  %ld  %s\n",path,st1.st_size,ctime(&st1.st_mtime));
+		if (fprintf(f1,"%s  %ld  %s\n",path,st1.st_size,ctime(&st1.st_mtime))<0)
+		{
+			   fprintf(stderr, "\nCannot write to file!\n");
+		}
+		printf("%s  %ld  %s\n",path,st1.st_size,ctime(&st1.st_mtime));
        }
      }
    }

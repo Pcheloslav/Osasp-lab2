@@ -1,3 +1,4 @@
+
 #include <stdio.h>
 #include <sys/types.h>
 #include <sys/stat.h>
@@ -26,8 +27,7 @@ int main(int argc, char *argv[]){
 	}
 	int N;
 	if ((N = atoi(argv[2]))==0) 
-		perror("atoi() ");
-
+		fprintf(stderr,"Invalid parameter 2\n");
 	
 	int fd;	
 	if (fd = open(argv[1], O_RDONLY)) { 

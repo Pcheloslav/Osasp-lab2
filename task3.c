@@ -27,12 +27,18 @@ int main(int argc, char *argv[]){
 	
 		}	
 		else
+		{
 			fprintf(stderr,"Error opening file");
+			return 0;
+		}
 		if (fclose(fp)) 
 			fprintf(stderr,"Error closing file");
 	}	
 	else
+	{
 		fprintf(stderr,"Error opening file");
+		return 0;
+	}
 		
 	return 0;
 }

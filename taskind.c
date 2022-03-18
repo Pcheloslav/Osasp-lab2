@@ -29,15 +29,22 @@ int main(int argc, char *argv[])
 	minsize=atoi(argv[3]);
 	maxdate=argv[6];
 	mindate=argv[5];
-	f1=fopen(argv[2],"w");
-	strptime(mindate, "%Y-%m-%d", &mintime);
-	strptime(maxdate, "%Y-%m-%d", &maxtime);
-	mind= mktime(&mintime);
-	maxd = mktime(&maxtime);
-	searchdir(argv[1]);
-	
-	fclose(f1);
-	return 0;
+	if (f1=fopen(argv[2],"w"))
+	{
+		strptime(mindate, "%Y-%m-%d", &mintime);
+		strptime(maxdate, "%Y-%m-%d", &maxtime);
+		mind= mktime(&mintime);
+		maxd = mktime(&maxtime);
+		searchdir(argv[1]);
+		
+		fclose(f1);
+		return 0;
+	}
+	else
+	{
+		fprintf(stderr,"Error opening file\n");
+		return 0;
+	}
 }
 
 int searchdir(char *name)
@@ -69,10 +76,6 @@ int searchdir(char *name)
 		
 		searchdir(newname);
 		}
-		else
-		{
-			fprintf(stderr, "\nCouldn't find directory!\n");
-		}
 	}
 	d=readdir(d1);
  }
@@ -91,12 +94,12 @@ int searchdir(char *name)
      {
        if (((st1.st_mtime)>=mind)&&((st1.st_mtime)<=maxd))
        {
-		   
-		if (fprintf(f1,"%s  %ld  %s\n",path,st1.st_size,ctime(&st1.st_mtime))<0)
-		{
-			   fprintf(stderr, "\nCannot write to file!\n");
-		}
-		printf("%s  %ld  %s\n",path,st1.st_size,ctime(&st1.st_mtime));
+		   if (fprintf(f1,"%s  %ld  %s\n",path,st1.st_size,ctime(&st1.st_mtime))<0)
+		   {
+			   	fprintf(stderr, "\nCannot write to file!\n");
+		   }
+			
+			printf("%s  %ld  %s\n",path,st1.st_size,ctime(&st1.st_mtime));
        }
      }
    }

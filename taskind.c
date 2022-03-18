@@ -25,8 +25,16 @@ int main(int argc, char *argv[])
 		fprintf(stderr,"Invalid number of parameters\n");
 		return 0;
 	}	
-	maxsize=atoi(argv[4]);	
-	minsize=atoi(argv[3]);
+	if ((maxsize=atoi(argv[4]))==0)
+	{
+		fprintf(stderr,"Invalid parameter 2\n");
+		return 0;
+	}	
+	if ((minsize=atoi(argv[3]))==0)
+	{
+		fprintf(stderr,"Invalid parameter 2\n");
+		return 0;
+	}	
 	maxdate=argv[6];
 	mindate=argv[5];
 	if (f1=fopen(argv[2],"w"))

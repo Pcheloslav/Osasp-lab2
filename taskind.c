@@ -6,6 +6,7 @@
 #include <string.h>
 #include <stdlib.h>
 #include <time.h>
+#include <limits.h>
 #include <errno.h>
 
 int searchdir(char *name);
@@ -19,20 +20,39 @@ time_t mind, maxd;
 
 FILE *f1;
 
+
+long validateInp(char* Inp)
+{
+    char *endptr;
+    long res = strtol(Inp, &endptr, 10);
+
+    if ((errno == ERANGE && (res == LONG_MAX || res == LONG_MIN)) || (errno != 0 && res == 0)) {
+       perror("strtol");
+       return -1;
+    }
+
+    if (endptr == Inp) {
+       fprintf(stderr, "Parameter should have int value\n");
+       return -1;
+    }
+
+    return res;
+}
+
 int main(int argc, char *argv[])
 {
 	if (argc != 7) {
 		fprintf(stderr,"Invalid number of parameters\n");
 		return 0;
 	}	
-	if ((maxsize=atoi(argv[4]))==0)
+	if ((maxsize=validateInp(argv[4]))==0)
 	{
-		fprintf(stderr,"Invalid parameter 2\n");
+		//fprintf(stderr,"Invalid parameter 2\n");
 		return 0;
 	}	
-	if ((minsize=atoi(argv[3]))==0)
+	if ((minsize=validateInp(argv[3]))==0)
 	{
-		fprintf(stderr,"Invalid parameter 2\n");
+		//fprintf(stderr,"Invalid parameter 2\n");
 		return 0;
 	}	
 	maxdate=argv[6];

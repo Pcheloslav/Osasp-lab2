@@ -4,7 +4,9 @@
 #include <fcntl.h>
 #include <string.h>
 #include <stdlib.h>
+#include <limits.h>
 #include <errno.h>
+
 
 int print(FILE* fp) {
 	int c = getc(fp);
@@ -18,15 +20,32 @@ int print(FILE* fp) {
 	return c;
 }
 
+long validateInp(char* Inp)
+{
+    char *endptr;
+    long res = strtol(Inp, &endptr, 10);
+
+    if ((errno == ERANGE && (res == LONG_MAX || res == LONG_MIN)) || (errno != 0 && res == 0)) {
+       perror("strtol");
+       return -1;
+    }
+
+    if (endptr == Inp) {
+       fprintf(stderr, "Second parameter should have int value\n");
+       return -1;
+    }
+
+    return res;
+}
+
 int main(int argc, char *argv[]){
 
 	if (argc != 3) {
 		fprintf(stderr,"Invalid number of parameters\n");
 		return 0;
 	}
-	int N;
-	if ((N = atoi(argv[2]))==0) {
-		fprintf(stderr,"Invalid parameter 2\n");
+	long N;
+	if ((N = validateInp(argv[2]))==-1) {
 		return 0;
 	}
 	

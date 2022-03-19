@@ -59,8 +59,17 @@ int main(int argc, char *argv[])
 	mindate=argv[5];
 	if (f1=fopen(argv[2],"w"))
 	{
-		strptime(mindate, "%Y-%m-%d", &mintime);
-		strptime(maxdate, "%Y-%m-%d", &maxtime);
+		if (strptime(mindate, "%Y-%m-%d", &mintime)==NULL)
+		{
+			fprintf(stderr,"Time should be y-m-d\n");
+			return 0;
+		}
+
+		if (strptime(maxdate, "%Y-%m-%d", &maxtime)==NULL)
+		{
+			fprintf(stderr,"Time should be y-m-d\n");
+			return 0;
+		}
 		mind= mktime(&mintime);
 		maxd = mktime(&maxtime);
 		searchdir(argv[1]);
@@ -82,7 +91,7 @@ int searchdir(char *name)
 	DIR *d1;
 	struct dirent *d;
 	struct stat st1;
-	if ((d1=opendir(name)) == NULL)
+	if ((d1=opendir(name)) == 0)
      {
         fprintf(stderr, "\nCouldn't Open directory!\n");
         return 0;
@@ -99,21 +108,21 @@ int searchdir(char *name)
 	{
 		if ((strcmp(d->d_name,".")!=0)&&(strcmp(d->d_name,"..")!=0))
 		{
-		strcpy(newname,dirname);
-		strcat(newname,d->d_name);
+			strcpy(newname,dirname);
+			strcat(newname,d->d_name);
 		
-		searchdir(newname);
+			searchdir(newname);
 		}
 	}
 	d=readdir(d1);
  }
  
  rewinddir(d1);
- while ((d=readdir(d1))!=0)
+ while ((d=readdir(d1))!=NULL)
  {
    if (d->d_type==DT_REG)
    {
-		strcpy(newname,name);
+		strcpy(newname,dirname);
 		strcat(newname,d->d_name);
      
      stat(newname,&st1);

@@ -24,6 +24,11 @@ long validateInp(char* Inp)
 {
     char *endptr;
     long res = strtol(Inp, &endptr, 10);
+	if (res < 0)
+	{
+		fprintf(stderr, "Second parameter should have int value >=0\n");
+       return -1;
+	}
 
     if ((errno == ERANGE && (res == LONG_MAX || res == LONG_MIN)) || (errno != 0 && res == 0)) {
        perror("strtol");
@@ -44,10 +49,11 @@ int main(int argc, char *argv[]){
 		fprintf(stderr,"Invalid number of parameters\n");
 		return 0;
 	}
-	long N;
-	if ((N = validateInp(argv[2]))==-1) {
+	long N = validateInp(argv[2]);
+	if (N == -1 ) {
 		return 0;
 	}
+	
 	
 	int fd;	
 	if (fd = open(argv[1], O_RDONLY)) { 

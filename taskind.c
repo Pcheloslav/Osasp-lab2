@@ -74,7 +74,11 @@ int main(int argc, char *argv[])
 		maxd = mktime(&maxtime);
 		searchdir(argv[1]);
 		
-		fclose(f1);
+		if (fclose(f1)!=0)
+		{
+			fprintf(stderr,"Error closing file\n");
+		return 0;
+		}
 		return 0;
 	}
 	else
@@ -118,7 +122,8 @@ int searchdir(char *name)
  }
  
  rewinddir(d1);
- while ((d=readdir(d1))!=NULL)
+ d=readdir(d1);
+ while (d!=NULL)
  {
    if (d->d_type==DT_REG)
    {

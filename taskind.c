@@ -86,8 +86,8 @@ int main(int argc, char *argv[])
 
 int searchdir(char *name)
 {
-	char dirname[256];
-	char newname[256];
+	char dirname[PATH_MAX];
+	char newname[PATH_MAX];
 	DIR *d1;
 	struct dirent *d;
 	struct stat st1;

@@ -45,14 +45,14 @@ int main(int argc, char *argv[])
 		fprintf(stderr,"Invalid number of parameters\n");
 		return 0;
 	}	
-	if ((maxsize=validateInp(argv[4]))==0)
+	maxsize=validateInp(argv[4]);
+	if (maxsize==-1)
 	{
-		//fprintf(stderr,"Invalid parameter 2\n");
 		return 0;
 	}	
-	if ((minsize=validateInp(argv[3]))==0)
+	minsize=validateInp(argv[3]);
+	if (minsize==-1)
 	{
-		//fprintf(stderr,"Invalid parameter 2\n");
 		return 0;
 	}	
 	maxdate=argv[6];
